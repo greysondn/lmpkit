@@ -1,5 +1,10 @@
 import struct
 
+def createDemoLumpFromFile(file):
+    ret = DemoLump()
+    ret.fromFile(file)
+    return ret
+
 class Tic(object):
     # this doubles as my first time trying to use property marker
     # as there's a lot of validation that needs to happen here
@@ -406,14 +411,15 @@ class DemoLump(object):
         # dump it raw into the footer field
         while (fstream.peek(1) != b""):
             self.footer = self.footer + fstream.read(1)
-            
+    
+    def fromFile(self, path):
+        with open(str(path), "rb") as f:
+            self.fromSource(f)
+    
 def main():
-    f = open("test1.lmp", "rb")
-    rec = DemoLump()
-    rec.fromSource(f)
-    f.close()
+    rec = createDemoLumpFromFile("test_files/test1.lmp")
     print("Test 1")
-    print("should be 4840 ticks")
+    print("should be 1420 ticks")
     print("real count...")
     print(len(rec.tics))
     
