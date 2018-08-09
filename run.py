@@ -313,6 +313,26 @@ class DemoLump(object):
     SK_HARD      = 3 # Ultra-Violence.
     SK_NIGHTMARE = 4 # Nightmare!
     
+    # versions, according to prboom+ usage.txt
+    # V_DOOM_12
+    # V_DOOM_1666
+    # V_DOOM2_19
+    V_ULTDOOM = 109
+    # V_FINALDOOM
+    # V_DOSDOOM
+    # V_TASDOOM
+    # V_BOOM
+    # V_BOOM_201
+    # V_BOOM_202
+    # V_LXDOOM_1
+    # V_MBF
+    # V_PRBOOM_1
+    # V_PRBOOM_2
+    # V_PRBOOM_3
+    # V_PRBOOM_4
+    # V_PRBOOM_5
+    # V_PRBOOM_6
+    
     def __init__(self):
         self.game_version = 0
         self.skill_level  = 0
@@ -346,7 +366,7 @@ class DemoLump(object):
                     str(version_byte) + ".)")
         
         # set version now
-        self.version = version_byte
+        self.game_version = version_byte
         
         # skill_level
         self.skill_level = struct.unpack("B", fstream.read(1))[0]
@@ -415,13 +435,3 @@ class DemoLump(object):
     def fromFile(self, path):
         with open(str(path), "rb") as f:
             self.fromSource(f)
-    
-def main():
-    rec = createDemoLumpFromFile("test_files/test1.lmp")
-    print("Test 1")
-    print("should be 1420 ticks")
-    print("real count...")
-    print(len(rec.tics))
-    
-if __name__ == "__main__":
-    main()
